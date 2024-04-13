@@ -8,6 +8,12 @@ void UButtonWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
+}
+
+void UButtonWidget::NativeOnInitialized()
+{
+	Super::NativeOnInitialized();
+	
 	Button_Main->OnClicked.AddDynamic(this, &UButtonWidget::HandleButtonClick);
 }
 

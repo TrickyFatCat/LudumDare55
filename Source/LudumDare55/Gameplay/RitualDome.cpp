@@ -3,6 +3,8 @@
 
 #include "RitualDome.h"
 
+#include "TrickyGameModeBase.h"
+#include "TrickyGameModeLibrary.h"
 #include "Components/SphereComponent.h"
 #include "LudumDare55/Components/HitPointsComponent.h"
 
@@ -20,9 +22,16 @@ ARitualDome::ARitualDome()
 void ARitualDome::BeginPlay()
 {
 	Super::BeginPlay();
+
+	HitPointsComponent->OnValueZero.AddUniqueDynamic(this, &ARitualDome::HandleZeroHitPoints);
 }
 
 void ARitualDome::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+void ARitualDome::HandleZeroHitPoints()
+{
+	UTrickyGameModeLibrary::GetTrickyGameMode(this)->FinishSession(false);
 }

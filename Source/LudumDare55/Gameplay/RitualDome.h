@@ -29,4 +29,7 @@ private:
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta=(AllowPrivateAccess))
 	TObjectPtr<UHitPointsComponent> HitPointsComponent = nullptr;
+
+	UFUNCTION()
+	void HandleZeroHitPoints();
 };

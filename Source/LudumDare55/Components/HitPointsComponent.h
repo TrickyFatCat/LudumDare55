@@ -3,12 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ResourceComponent.h"
+#include "Components/SimpleResourceComponent.h"
 #include "HitPointsComponent.generated.h"
 
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
-class LUDUMDARE55_API UHitPointsComponent : public UResourceComponent
+class LUDUMDARE55_API UHitPointsComponent : public USimpleResourceComponent
 {
 	GENERATED_BODY()
 

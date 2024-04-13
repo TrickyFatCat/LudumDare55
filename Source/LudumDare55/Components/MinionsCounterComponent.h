@@ -11,13 +11,13 @@ struct FMinionCounterData
 {
 	GENERATED_BODY()
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSubclassOf<AActor> MinionClass = nullptr;
 	
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	int32 CurrentNumber = 0;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	int32 MaxNumber = 0;
 
 	static bool IncrementCurrentNumber(FMinionCounterData& Data)
@@ -92,9 +92,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool IncreaseMaxNumber(TSubclassOf<AActor> MinionClass, const int32 Amount);
 
+	UFUNCTION(BlueprintPure)
+	bool GetMinionCounterData(TSubclassOf<AActor> MinionClass, FMinionCounterData& OutMinionCounterData);
+	
 private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta=(AllowPrivateAccess))
 	TArray<FMinionCounterData> MinionCounters;
-
-	bool GetMinionCounterData(TSubclassOf<AActor> MinionClass, FMinionCounterData& OutMinionCounterData);
 };

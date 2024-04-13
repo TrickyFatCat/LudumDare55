@@ -3,6 +3,7 @@
 
 #include "PlayerPawn.h"
 
+#include "LudumDare55/Components/MinionsCounterComponent.h"
 #include "LudumDare55/Components/SoulsCounterComponent.h"
 
 
@@ -11,6 +12,7 @@ APlayerPawn::APlayerPawn()
 	PrimaryActorTick.bCanEverTick = false;
 
 	SoulsCounterComponent = CreateDefaultSubobject<USoulsCounterComponent>("SoulsCounter");
+	MinionsCounterComponent = CreateDefaultSubobject<UMinionsCounterComponent>("MinionsCounter");
 }
 
 void APlayerPawn::BeginPlay()

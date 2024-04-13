@@ -6,20 +6,45 @@
 #include "GameFramework/Actor.h"
 #include "Building.generated.h"
 
+class UBuildingMenuWidget;
+class UWidgetComponent;
+class UStaticMeshComponent;
+
 UCLASS()
 class LUDUMDARE55_API ABuilding : public AActor
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this actor's properties
 	ABuilding();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
+	TObjectPtr<USceneComponent> SceneComponent = nullptr;
+	
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
+	TObjectPtr<UStaticMeshComponent> MeshComponent = nullptr;
+	
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
+	TObjectPtr<UWidgetComponent> MenuWidgetComponent = nullptr;
+
+	UPROPERTY(BlueprintReadOnly)
+	TObjectPtr<UBuildingMenuWidget> BuildingMenuWidget = nullptr;
+
+	UPROPERTY(BlueprintReadOnly)
+	bool bIsSelected = false;
+
+	UFUNCTION()
+	void HandleMouseClick(AActor* TouchedActor, FKey ButtonPressed);
+
+private:
+	void SetWidgetVisibility(const bool bIsVisible);
+
+	UFUNCTION()
+	void HandleBeginCursorOver(AActor* TouchedActor);
+
+	UFUNCTION()
+	void HandleEndCursorOver(AActor* TouchedActor);
 };

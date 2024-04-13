@@ -6,6 +6,7 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "TrickyGameModeLibrary.generated.h"
 
+class ATrickyPlayerControllerBase;
 class ATrickyGameModeBase;
 
 /**
@@ -22,4 +23,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="TrickyGameMode", meta=(DefaultToSelf="Target", WorldContext="Target"))
 	static bool TogglePause(const UObject* Target);
+
+	UFUNCTION(BlueprintPure, Category="TrickyGameMode", meta=(WorldContext="WorldContextObject"))
+	static ATrickyPlayerControllerBase* GetTrickyController(const UObject* WorldContextObject);
+	
+	UFUNCTION(BlueprintCallable, Category="TrickyGameMode", meta=(WorldContext="WorldContextObject"))
+	static void SetMouseEventsEnabled(const UObject* WorldContextObject, const bool bIsEnabled);
 };

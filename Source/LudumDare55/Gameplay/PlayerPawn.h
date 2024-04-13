@@ -6,6 +6,7 @@
 #include "GameFramework/Pawn.h"
 #include "PlayerPawn.generated.h"
 
+class UMinionsCounterComponent;
 class USoulsCounterComponent;
 
 UCLASS()
@@ -27,4 +28,7 @@ public:
 private:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta=(AllowPrivateAccess))
 	TObjectPtr<USoulsCounterComponent> SoulsCounterComponent = nullptr;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, meta=(AllowPrivateAccess))
+	TObjectPtr<UMinionsCounterComponent> MinionsCounterComponent = nullptr;
 };

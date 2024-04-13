@@ -44,6 +44,8 @@ protected:
 	UPROPERTY(Transient, meta=(BindWidgetAnim))
 	TObjectPtr<UWidgetAnimation> HideAnimation = nullptr;
 
+	ESlateVisibility DefaultVisibility = ESlateVisibility::SelfHitTestInvisible;
+
 	virtual void OnAnimationStarted_Implementation(const UWidgetAnimation* Animation) override;
 	
 	virtual void OnAnimationFinished_Implementation(const UWidgetAnimation* Animation) override;

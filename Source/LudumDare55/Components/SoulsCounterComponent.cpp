@@ -20,6 +20,8 @@ bool USoulsCounterComponent::AddSouls(const int32 Amount)
 		return false;
 	}
 
+	Souls += Amount;
+	OnSoulsAdded.Broadcast(this, Souls, Amount);
 	return true;
 }
 
@@ -30,5 +32,8 @@ bool USoulsCounterComponent::SpendSouls(const int32 Amount)
 		return false;
 	}
 
+	Souls -= Amount;
+	Souls = FMath::Max(Souls, 0);
+	OnSoulsSpent.Broadcast(this, Souls, Amount);
 	return true;
 }

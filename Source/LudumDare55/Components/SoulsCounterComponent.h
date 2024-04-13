@@ -28,6 +28,12 @@ protected:
 	virtual void InitializeComponent() override;
 
 public:
+	UPROPERTY(BlueprintAssignable)
+	FOnSoulsAddedDynamicSignature OnSoulsAdded;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnSoulsSpentDynamicSignature OnSoulsSpent;
+	
 	UFUNCTION(BlueprintCallable)
 	bool AddSouls(const int32 Amount);
 

@@ -6,7 +6,13 @@
 
 ABuilding::ABuilding()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
+
+	SceneComponent = CreateDefaultSubobject<USceneComponent>("Root");
+	SetRootComponent(SceneComponent);
+	
+	MeshComponent = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
+	MeshComponent->SetupAttachment(RootComponent);
 }
 
 void ABuilding::BeginPlay()

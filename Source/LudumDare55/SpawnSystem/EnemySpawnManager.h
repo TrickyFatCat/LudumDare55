@@ -22,10 +22,10 @@ struct FEnemyWaveData : public FTableRowBase
 	TSubclassOf<AEnemy> Enemy;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy", meta = (ClampMin = "1", UIMin = "1"))
-	int32 Weight;
+	int32 Weight = 1;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy", meta = (ClampMin = "1", UIMin = "1"))
-	int32 Count;
+	int32 Count = 1;
 };
 
 USTRUCT(BlueprintType)
@@ -37,16 +37,16 @@ struct FWaveData
 	TArray<TSubclassOf<AEnemy>> Enemies;
 
 	UPROPERTY(BlueprintReadOnly)
-	int32 MaxEnemies;
+	int32 MaxEnemies = 0;
 
 	UPROPERTY(BlueprintReadOnly)
-	int32 Spawned;
+	int32 Spawned = 0;
 
 	UPROPERTY(BlueprintReadOnly)
-	float SpawnDelay;
+	float SpawnDelay = 1.f;
 
 	UPROPERTY(BlueprintReadOnly)
-	int32 MaxSpawnAtOnce;
+	int32 MaxSpawnAtOnce = 1;
 };
 
 

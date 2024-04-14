@@ -13,49 +13,14 @@ struct FMinionCounterData
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSubclassOf<AMinion> MinionClass = nullptr;
 	
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	int32 CurrentNumber = 0;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 MaxNumber = 0;
-
-	static bool IncrementCurrentNumber(FMinionCounterData& Data)
-	{
-		if (Data.CurrentNumber >= Data.MaxNumber)
-		{
-			return false;
-		}
-		
-		Data.CurrentNumber += 1;
-		Data.CurrentNumber = FMath::Min(Data.CurrentNumber, Data.MaxNumber);
-		return true;
-	}
-	
-	static bool DecrementCurrentNumber(FMinionCounterData& Data)
-	{
-		if (Data.CurrentNumber <= 0)
-		{
-			return false;
-		}
-		
-		Data.CurrentNumber -= 1;
-		Data.CurrentNumber = FMath::Max(Data.CurrentNumber, 0);
-		return true;
-	}
-	
-	static bool IncreaseMaxNumber(FMinionCounterData& Data, const int32 Amount)
-	{
-		if (Amount <= 0)
-		{
-			return false;
-		}
-		
-		Data.MaxNumber += Amount;
-		return true;
-	}
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMinionsNumberIncreasedDynamicSignature, FMinionCounterData, Data);
@@ -92,12 +57,12 @@ public:
 	bool DecrementCounter(TSubclassOf<AMinion> MinionClass);
 
 	UFUNCTION(BlueprintCallable)
-	bool IncreaseMaxNumber(TSubclassOf<AMinion> MinionClass, const int32 Amount);
+	bool IncreaseMaxNumber(TSubclassOf<AMinion> MinionClass, const int32 Amount, const bool bResetCurNumber);
 
 	UFUNCTION(BlueprintPure)
-	bool GetMinionCounterData(TSubclassOf<AMinion> MinionClass, FMinionCounterData& OutMinionCounterData);
+	bool GetMinionCounterData(TSubclassOf<AMinion> MinionClass, FMinionCounterData& OutData);
 	
 private:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta=(AllowPrivateAccess))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess))
 	TArray<FMinionCounterData> MinionCounters;
 };

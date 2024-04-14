@@ -15,11 +15,6 @@ UMinionsCounterComponent::UMinionsCounterComponent()
 void UMinionsCounterComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
-
-	for (auto& Data : MinionCounters)
-	{
-		Data.CurrentNumber = Data.MaxNumber;
-	}
 }
 
 bool UMinionsCounterComponent::IncrementCounter(TSubclassOf<AMinion> MinionClass)
@@ -83,8 +78,7 @@ bool UMinionsCounterComponent::DecrementCounter(TSubclassOf<AMinion> MinionClass
 }
 
 bool UMinionsCounterComponent::IncreaseMaxNumber(TSubclassOf<AMinion> MinionClass,
-                                                 const int32 Amount,
-                                                 const bool bResetCurNumber)
+                                                 const int32 Amount)
 {
 	if (Amount <= 0)
 	{
@@ -108,12 +102,6 @@ bool UMinionsCounterComponent::IncreaseMaxNumber(TSubclassOf<AMinion> MinionClas
 
 	FMinionCounterData* MinionCounterData = MinionCounters.FindByPredicate(Predicate);
 	MinionCounterData->MaxNumber += Amount;
-
-	if (bResetCurNumber)
-	{
-		MinionCounterData->CurrentNumber = MinionCounterData->MaxNumber;
-	}
-
 	OnMinionsMaxNumberIncreased.Broadcast(*MinionCounterData);
 	return true;
 }

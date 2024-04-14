@@ -57,7 +57,7 @@ public:
 	bool DecrementCounter(TSubclassOf<AMinion> MinionClass);
 
 	UFUNCTION(BlueprintCallable)
-	bool IncreaseMaxNumber(TSubclassOf<AMinion> MinionClass, const int32 Amount, const bool bResetCurNumber);
+	bool IncreaseMaxNumber(TSubclassOf<AMinion> MinionClass, const int32 Amount);
 
 	UFUNCTION(BlueprintPure)
 	bool GetMinionCounterData(TSubclassOf<AMinion> MinionClass, FMinionCounterData& OutData);

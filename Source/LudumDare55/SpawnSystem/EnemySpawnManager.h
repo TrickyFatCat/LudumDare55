@@ -75,6 +75,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FScalableFloat MaxSpawnAtOnce;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FScalableFloat WaveSpawnDelay;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 MinRandomWaveIndex = 15;
 
@@ -108,4 +111,7 @@ private:
 
 	UPROPERTY()
 	FTimerHandle SpawnDelayTimer;
+
+	UPROPERTY()
+	FTimerHandle WaveRestartDelayTimer;
 };

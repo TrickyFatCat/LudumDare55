@@ -93,8 +93,13 @@ void AEnemySpawnManager::FinishWave()
 
 	if (WaveIndex >= WaveTables.Num())
 	{
-		WaveIndex = 0;
+		const int32 MaxIndex = WaveTables.Num() - 1;
+		const int32 MinIndex = MinRandomWaveIndex > MaxIndex ? MaxIndex : MinRandomWaveIndex;
+		WaveIndex = FMath::RandRange(MinIndex, MaxIndex);
 	}
+
+	const float DelayTimer = WaveSpawnDelay.GetValueAtLevel(WaveIndex);
+	GetWorldTimerManager().SetTimer(WaveRestartDelayTimer, this, &AEnemySpawnManager::StartWave, DelayTimer, false);
 }
 
 void AEnemySpawnManager::GenerateWaveData()

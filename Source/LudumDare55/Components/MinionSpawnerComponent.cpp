@@ -3,6 +3,7 @@
 
 #include "MinionSpawnerComponent.h"
 
+#include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "LudumDare55/Characters/Minion.h"
 
@@ -19,8 +20,14 @@ bool UMinionSpawnerComponent::SpawnMinion(TSubclassOf<AMinion> MinionClass)
 		return false;
 	}
 
-	AMinion* Minion = GetWorld()->SpawnActorDeferred<AMinion>(MinionClass, GetOwner()->GetTransform());
-	Minion->FinishSpawning(GetOwner()->GetTransform());
+	FVector SpawnLocation = GetOwner()->GetActorLocation();
+	FTransform SpawnTransform {SpawnLocation};
+	SpawnTransform.SetRotation(GetOwner()->GetActorRotation().Quaternion());
+	
+	AMinion* Minion = GetWorld()->SpawnActorDeferred<AMinion>(MinionClass, SpawnTransform);
+	SpawnLocation.Z =  Minion->GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
+	SpawnTransform.SetLocation(SpawnLocation);
+	Minion->FinishSpawning(SpawnTransform);
 	OnMinionSpawned.Broadcast(this, Minion);
 	return true;
 }

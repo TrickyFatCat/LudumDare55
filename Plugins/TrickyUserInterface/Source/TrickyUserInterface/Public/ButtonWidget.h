@@ -25,6 +25,7 @@ public:
 	
 protected:
 	virtual void NativeConstruct() override;
+	virtual void NativeOnInitialized() override;
 
 	UPROPERTY(BlueprintReadOnly, Category="ButtonWidget", meta=(BindWidget))
 	TObjectPtr<UButton> Button_Main = nullptr;

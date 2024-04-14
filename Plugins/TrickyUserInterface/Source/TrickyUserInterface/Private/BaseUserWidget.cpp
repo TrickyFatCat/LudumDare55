@@ -8,6 +8,15 @@
 void UBaseUserWidget::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
+
+	switch (Visibility)
+	{
+	case ESlateVisibility::Visible:
+	case ESlateVisibility::SelfHitTestInvisible:
+	case ESlateVisibility::HitTestInvisible:
+		DefaultVisibility = Visibility;
+		break;
+	}
 }
 
 void UBaseUserWidget::Show()
@@ -24,14 +33,14 @@ void UBaseUserWidget::Hide()
 
 void UBaseUserWidget::OnAnimationStarted_Implementation(const UWidgetAnimation* Animation)
 {
-	SetVisibility(ESlateVisibility::Visible);
+	SetVisibility(DefaultVisibility);
 }
 
 void UBaseUserWidget::OnAnimationFinished_Implementation(const UWidgetAnimation* Animation)
 {
 	if (Animation == ShowAnimation)
 	{
-		SetVisibility(ESlateVisibility::Visible); // In case, of rapid change of the state.
+		SetVisibility(DefaultVisibility); // In case, of rapid change of the state.
 		OnShowed.Broadcast();
 	}
 	else

@@ -55,4 +55,6 @@ protected:
 	void HandleButtonClicked(UButtonWidget* ButtonWidget);
 
 	void SetButtonsVisibility(const bool bIsVisible);
+private:
+	void GenerateButtons();
 };

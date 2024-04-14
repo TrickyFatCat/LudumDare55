@@ -12,13 +12,13 @@
 
 void UBuildingMenuWidget::NativeOnInitialized()
 {
-	Super::NativeOnInitialized();
-
 	if (Button_Quit)
 	{
 		Button_Quit->OnButtonClicked.AddUniqueDynamic(this, &UBuildingMenuWidget::HandleButtonClicked);
 		Button_Quit->SetOwningBuilding(OwningBuilding);
 	}
+
+	GenerateButtons();
 
 	if (!Buttons.IsEmpty())
 	{
@@ -32,40 +32,17 @@ void UBuildingMenuWidget::NativeOnInitialized()
 			Button->SetOwningBuilding(OwningBuilding);
 		}
 	}
+
+	Super::NativeOnInitialized();
 }
 
 void UBuildingMenuWidget::NativePreConstruct()
 {
 	Super::NativePreConstruct();
 
-	if (!HorizontalBox_Buttons)
+	if (IsDesignTime())
 	{
-		return;
-	}
-
-	HorizontalBox_Buttons->ClearChildren();
-	Buttons.Empty();
-
-	if (ButtonClasses.IsEmpty())
-	{
-		return;
-	}
-
-	for (auto Button : ButtonClasses)
-	{
-		if (!Button)
-		{
-			continue;
-		}
-
-		UBuildingButtonWidget* NewButton = CreateWidget<UBuildingButtonWidget>(this, Button);
-		NewButton->SetVisibility(ESlateVisibility::Hidden);
-		HorizontalBox_Buttons->AddChildToHorizontalBox(NewButton);
-		Buttons.Add(NewButton);
-		
-		USpacer* Spacer = NewObject<USpacer>(this, USpacer::StaticClass());
-		Spacer->SetSize(FVector2D{0.f, SpaceBetweenButtons});
-		HorizontalBox_Buttons->AddChildToHorizontalBox(Spacer);
+		GenerateButtons();
 	}
 }
 
@@ -104,5 +81,38 @@ void UBuildingMenuWidget::SetButtonsVisibility(const bool bIsVisible)
 		}
 
 		Button->SetVisibility(NewVisibility);
+	}
+}
+
+void UBuildingMenuWidget::GenerateButtons()
+{
+	if (!HorizontalBox_Buttons)
+	{
+		return;
+	}
+
+	HorizontalBox_Buttons->ClearChildren();
+	Buttons.Empty();
+
+	if (ButtonClasses.IsEmpty())
+	{
+		return;
+	}
+
+	for (auto Button : ButtonClasses)
+	{
+		if (!Button)
+		{
+			continue;
+		}
+
+		UBuildingButtonWidget* NewButton = CreateWidget<UBuildingButtonWidget>(this, Button);
+		NewButton->SetVisibility(ESlateVisibility::Hidden);
+		HorizontalBox_Buttons->AddChildToHorizontalBox(NewButton);
+		Buttons.Add(NewButton);
+
+		USpacer* Spacer = NewObject<USpacer>(this, USpacer::StaticClass());
+		Spacer->SetSize(FVector2D{0.f, SpaceBetweenButtons});
+		HorizontalBox_Buttons->AddChildToHorizontalBox(Spacer);
 	}
 }

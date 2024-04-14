@@ -16,7 +16,7 @@ struct FMinionCounterData
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSubclassOf<AMinion> MinionClass = nullptr;
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly)
 	int32 CurrentNumber = 0;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)

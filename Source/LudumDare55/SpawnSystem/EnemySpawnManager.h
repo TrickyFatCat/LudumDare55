@@ -4,14 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "ScalableFloat.h"
 #include "EnemySpawnManager.generated.h"
 
 class AEnemySpawnPoint;
 class AEnemy;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnWaveStartedDynamicSignature);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnWaveStartedDynamicSignature, int32, Index);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnWaveFinishedDynamicSignature);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnWaveFinishedDynamicSignature, int32, Index);
 
 USTRUCT(BlueprintType)
 struct FEnemyWaveData : public FTableRowBase
@@ -60,28 +61,33 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-	
+
 public:
 	UPROPERTY(BlueprintAssignable)
 	FOnWaveStartedDynamicSignature OnWaveStarted;
 
 	UPROPERTY(BlueprintAssignable)
 	FOnWaveFinishedDynamicSignature OnWaveFinished;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FScalableFloat SpawnDelay;
 	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FScalableFloat MaxSpawnAtOnce;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UDataTable* WaveTable;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float SpawnDelay = 2.0f;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int MaxSpawnAtOnce = 2;
-	
+	int32 MinRandomWaveIndex = 15;
+
 protected:
-	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TArray<UDataTable*> WaveTables;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	int32 WaveIndex = 0;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bIsRandomSpawn = true;
-	
+
 	void RandomizeEnemies();
 
 	UFUNCTION()
@@ -94,9 +100,8 @@ protected:
 	void FinishWave();
 
 	void GenerateWaveData();
-	
-	
-private:	
+
+private:
 	TArray<AEnemySpawnPoint*> EnemySpawnPoints;
 
 	FWaveData CurrentWaveData;

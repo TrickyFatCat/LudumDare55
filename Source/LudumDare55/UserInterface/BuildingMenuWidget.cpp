@@ -46,7 +46,7 @@ void UBuildingMenuWidget::NativePreConstruct()
 	HorizontalBox_Buttons->ClearChildren();
 	Buttons.Empty();
 
-	if (Buttons.IsEmpty())
+	if (ButtonClasses.IsEmpty())
 	{
 		return;
 	}
@@ -59,11 +59,13 @@ void UBuildingMenuWidget::NativePreConstruct()
 		}
 
 		UBuildingButtonWidget* NewButton = CreateWidget<UBuildingButtonWidget>(this, Button);
+		NewButton->SetVisibility(ESlateVisibility::Hidden);
+		HorizontalBox_Buttons->AddChildToHorizontalBox(NewButton);
+		Buttons.Add(NewButton);
+		
 		USpacer* Spacer = NewObject<USpacer>(this, USpacer::StaticClass());
 		Spacer->SetSize(FVector2D{0.f, SpaceBetweenButtons});
-		HorizontalBox_Buttons->AddChildToHorizontalBox(NewButton);
 		HorizontalBox_Buttons->AddChildToHorizontalBox(Spacer);
-		Buttons.Add(NewButton);
 	}
 }
 

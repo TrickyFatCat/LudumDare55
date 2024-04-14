@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "Minion.generated.h"
 
+class UMinionsCounterComponent;
+class UMinionLifeTimeComponent;
 class UHitPointsComponent;
 
 UCLASS()
@@ -25,4 +27,13 @@ public:
 protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<UHitPointsComponent> HitPointsComponent = nullptr;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
+	TObjectPtr<UMinionLifeTimeComponent> LifeTimeComponent = nullptr;
+
+	UPROPERTY()
+	TObjectPtr<UMinionsCounterComponent> CounterComponent = nullptr;
+
+	UFUNCTION(BlueprintCallable)
+	void DecrementCounter();
 };

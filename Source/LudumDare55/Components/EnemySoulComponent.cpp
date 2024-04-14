@@ -21,13 +21,13 @@ void UEnemySoulComponent::BeginPlay()
 	SoulsCounterComponent = Pawn->GetComponentByClass<USoulsCounterComponent>();
 }
 
-bool UEnemySoulComponent::IncreaseSouls()
+void UEnemySoulComponent::IncreaseSouls()
 {
 	if (!SoulsCounterComponent)
 	{
-		return false;
+		return;
 	}
 
-	return SoulsCounterComponent->AddSouls(SoulsAmount);
+	SoulsCounterComponent->AddSouls(SoulsAmount);
 }
 

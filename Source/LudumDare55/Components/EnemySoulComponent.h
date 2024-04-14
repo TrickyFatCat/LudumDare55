@@ -28,5 +28,5 @@ protected:
 
 public:
 	UFUNCTION(BlueprintCallable)
-	bool IncreaseSouls();
+	void IncreaseSouls();
 };

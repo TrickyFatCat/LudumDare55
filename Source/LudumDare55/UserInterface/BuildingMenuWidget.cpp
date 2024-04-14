@@ -3,6 +3,7 @@
 
 #include "BuildingMenuWidget.h"
 
+#include "BuildingButtonWidget.h"
 #include "ButtonWidget.h"
 #include "TrickyGameModeLibrary.h"
 #include "Components/HorizontalBox.h"
@@ -11,44 +12,23 @@
 
 void UBuildingMenuWidget::NativeOnInitialized()
 {
-	Super::NativeOnInitialized();
-
 	if (Button_Quit)
 	{
 		Button_Quit->OnButtonClicked.AddUniqueDynamic(this, &UBuildingMenuWidget::HandleButtonClicked);
+		Button_Quit->SetOwningBuilding(OwningBuilding);
 	}
+
+	GenerateButtons();
+	Super::NativeOnInitialized();
 }
 
 void UBuildingMenuWidget::NativePreConstruct()
 {
 	Super::NativePreConstruct();
 
-	if (!HorizontalBox_Buttons)
+	if (IsDesignTime())
 	{
-		return;
-	}
-
-	HorizontalBox_Buttons->ClearChildren();
-	Buttons.Empty();
-
-	if (Buttons.IsEmpty())
-	{
-		return;
-	}
-
-	for (auto Button : ButtonClasses)
-	{
-		if (!Button)
-		{
-			continue;
-		}
-
-		UButtonWidget* NewButton = CreateWidget<UButtonWidget>(this, Button);
-		USpacer* Spacer = NewObject<USpacer>(this, USpacer::StaticClass());
-		Spacer->SetSize(FVector2D{0.f, SpaceBetweenButtons});
-		HorizontalBox_Buttons->AddChildToHorizontalBox(NewButton);
-		HorizontalBox_Buttons->AddChildToHorizontalBox(Spacer);
-		Buttons.Add(NewButton);
+		GenerateButtons();
 	}
 }
 
@@ -57,6 +37,23 @@ void UBuildingMenuWidget::ShowButtons()
 	SetButtonsVisibility(true);
 }
 
+void UBuildingMenuWidget::SetOwningBuilding(ABuilding* Building)
+{
+	OwningBuilding = Building;
+	
+	if (!Buttons.IsEmpty())
+	{
+		for (auto Button : Buttons)
+		{
+			if (!Button)
+			{
+				continue;
+			}
+
+			Button->SetOwningBuilding(OwningBuilding);
+		}
+	}
+}
 
 void UBuildingMenuWidget::HandleButtonClicked(UButtonWidget* ButtonWidget)
 {
@@ -82,5 +79,38 @@ void UBuildingMenuWidget::SetButtonsVisibility(const bool bIsVisible)
 		}
 
 		Button->SetVisibility(NewVisibility);
+	}
+}
+
+void UBuildingMenuWidget::GenerateButtons()
+{
+	if (!HorizontalBox_Buttons)
+	{
+		return;
+	}
+
+	HorizontalBox_Buttons->ClearChildren();
+	Buttons.Empty();
+
+	if (ButtonClasses.IsEmpty())
+	{
+		return;
+	}
+
+	for (auto Button : ButtonClasses)
+	{
+		if (!Button)
+		{
+			continue;
+		}
+
+		UBuildingButtonWidget* NewButton = CreateWidget<UBuildingButtonWidget>(this, Button);
+		NewButton->SetVisibility(ESlateVisibility::Hidden);
+		HorizontalBox_Buttons->AddChildToHorizontalBox(NewButton);
+		Buttons.Add(NewButton);
+
+		USpacer* Spacer = NewObject<USpacer>(this, USpacer::StaticClass());
+		Spacer->SetSize(FVector2D{0.f, SpaceBetweenButtons});
+		HorizontalBox_Buttons->AddChildToHorizontalBox(Spacer);
 	}
 }

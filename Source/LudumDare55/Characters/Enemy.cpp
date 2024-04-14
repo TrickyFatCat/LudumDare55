@@ -3,6 +3,7 @@
 
 #include "Enemy.h"
 
+#include "LudumDare55/Components/EnemySoulComponent.h"
 #include "LudumDare55/Components/HitPointsComponent.h"
 
 
@@ -11,6 +12,7 @@ AEnemy::AEnemy()
 	PrimaryActorTick.bCanEverTick = true;
 
 	HitPointsComponent = CreateDefaultSubobject<UHitPointsComponent>("HitPoints");
+	EnemySoulComponent = CreateDefaultSubobject<UEnemySoulComponent>("EnemySoul");
 }
 
 void AEnemy::BeginPlay()
@@ -24,6 +26,9 @@ void AEnemy::BeginPlay()
 			GetMesh()->HideBoneByName(BoneName, PBO_None);
 		}
 	}
+
+	OnTakeAnyDamage.AddUniqueDynamic(this, &AEnemy::HandleAnyDamageTaken);
+	HitPointsComponent->OnValueZero.AddUniqueDynamic(EnemySoulComponent, &UEnemySoulComponent::IncreaseSouls);
 }
 
 void AEnemy::Tick(float DeltaTime)
@@ -31,4 +36,11 @@ void AEnemy::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-
+void AEnemy::HandleAnyDamageTaken(AActor* DamagedActor,
+                                  float Damage,
+                                  const UDamageType* DamageType,
+                                  AController* InstigatedBy,
+                                  AActor* DamageCauser)
+{
+	HitPointsComponent->DecreaseValue(Damage);
+}

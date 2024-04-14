@@ -19,20 +19,6 @@ void UBuildingMenuWidget::NativeOnInitialized()
 	}
 
 	GenerateButtons();
-
-	if (!Buttons.IsEmpty())
-	{
-		for (auto Button : Buttons)
-		{
-			if (!Button)
-			{
-				continue;
-			}
-
-			Button->SetOwningBuilding(OwningBuilding);
-		}
-	}
-
 	Super::NativeOnInitialized();
 }
 
@@ -54,8 +40,20 @@ void UBuildingMenuWidget::ShowButtons()
 void UBuildingMenuWidget::SetOwningBuilding(ABuilding* Building)
 {
 	OwningBuilding = Building;
-}
+	
+	if (!Buttons.IsEmpty())
+	{
+		for (auto Button : Buttons)
+		{
+			if (!Button)
+			{
+				continue;
+			}
 
+			Button->SetOwningBuilding(OwningBuilding);
+		}
+	}
+}
 
 void UBuildingMenuWidget::HandleButtonClicked(UButtonWidget* ButtonWidget)
 {

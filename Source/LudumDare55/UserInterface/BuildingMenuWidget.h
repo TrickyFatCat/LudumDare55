@@ -4,9 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "BaseUserWidget.h"
+#include "LudumDare55/Gameplay/Building.h"
 
 #include "BuildingMenuWidget.generated.h"
 
+class UBuildingButtonWidget;
+class ABuilding;
 class UHorizontalBox;
 class UButtonWidget;
 /**
@@ -26,18 +29,24 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ShowButtons();
 
+	UFUNCTION(BlueprintCallable)
+	void SetOwningBuilding(ABuilding* Building);
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(BindWidget))
 	TObjectPtr<UHorizontalBox> HorizontalBox_Buttons = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(BindWidget))
-	TObjectPtr<UButtonWidget> Button_Quit = nullptr;
+	TObjectPtr<UBuildingButtonWidget> Button_Quit = nullptr;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TArray<TSubclassOf<UButtonWidget>> ButtonClasses = {};
+	TArray<TSubclassOf<UBuildingButtonWidget>> ButtonClasses = {};
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TArray<TObjectPtr<UButtonWidget>> Buttons;
+	TArray<TObjectPtr<UBuildingButtonWidget>> Buttons;
+
+	UPROPERTY(BlueprintReadOnly)
+	TObjectPtr<ABuilding> OwningBuilding = nullptr;
 	
 	UPROPERTY(BlueprintReadOnly)
 	float SpaceBetweenButtons = 15.f;

@@ -3,6 +3,7 @@
 
 #include "BuildingMenuWidget.h"
 
+#include "BuildingButtonWidget.h"
 #include "ButtonWidget.h"
 #include "TrickyGameModeLibrary.h"
 #include "Components/HorizontalBox.h"
@@ -16,6 +17,20 @@ void UBuildingMenuWidget::NativeOnInitialized()
 	if (Button_Quit)
 	{
 		Button_Quit->OnButtonClicked.AddUniqueDynamic(this, &UBuildingMenuWidget::HandleButtonClicked);
+		Button_Quit->SetOwningBuilding(OwningBuilding);
+	}
+
+	if (!Buttons.IsEmpty())
+	{
+		for (auto Button : Buttons)
+		{
+			if (!Button)
+			{
+				continue;
+			}
+
+			Button->SetOwningBuilding(OwningBuilding);
+		}
 	}
 }
 
@@ -43,7 +58,7 @@ void UBuildingMenuWidget::NativePreConstruct()
 			continue;
 		}
 
-		UButtonWidget* NewButton = CreateWidget<UButtonWidget>(this, Button);
+		UBuildingButtonWidget* NewButton = CreateWidget<UBuildingButtonWidget>(this, Button);
 		USpacer* Spacer = NewObject<USpacer>(this, USpacer::StaticClass());
 		Spacer->SetSize(FVector2D{0.f, SpaceBetweenButtons});
 		HorizontalBox_Buttons->AddChildToHorizontalBox(NewButton);
@@ -55,6 +70,11 @@ void UBuildingMenuWidget::NativePreConstruct()
 void UBuildingMenuWidget::ShowButtons()
 {
 	SetButtonsVisibility(true);
+}
+
+void UBuildingMenuWidget::SetOwningBuilding(ABuilding* Building)
+{
+	OwningBuilding = Building;
 }
 
 

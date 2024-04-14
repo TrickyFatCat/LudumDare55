@@ -32,6 +32,7 @@ void ABuilding::BeginPlay()
 	OnEndCursorOver.AddUniqueDynamic(this, &ABuilding::HandleEndCursorOver);
 
 	BuildingMenuWidget = Cast<UBuildingMenuWidget>(MenuWidgetComponent->GetWidget());
+	BuildingMenuWidget->SetOwningBuilding(this);
 }
 
 void ABuilding::HandleMouseClick(AActor* TouchedActor, FKey ButtonPressed)

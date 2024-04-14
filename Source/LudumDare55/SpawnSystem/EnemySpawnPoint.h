@@ -38,8 +38,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void Unlock() { State = ESpawnerState::Ready; };
 
-	int32 GetWaveGroup() const { return WaveId; };
-
 protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<USphereComponent> CollisionComponent = nullptr;
@@ -51,9 +49,6 @@ protected:
 	float FreezingDuration = 1.0f;
 
 private:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 WaveId = 1;
-
 	UPROPERTY(EditAnywhere)
 	ESpawnerState State = ESpawnerState::Ready;
 

@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "EnemySpawnPoint.generated.h"
 
+class AEnemy;
 class UArrowComponent;
 class USphereComponent;
 
@@ -30,7 +31,7 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	bool Spawn(UClass* Monster);
+	bool Spawn(TSubclassOf<AEnemy> EnemyClass);
 
 	UFUNCTION(BlueprintCallable)
 	void Lock() { State = ESpawnerState::Block; };

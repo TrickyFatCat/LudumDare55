@@ -4,6 +4,7 @@
 #include "EnemySpawnPoint.h"
 
 #include "Components/ArrowComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/SphereComponent.h"
 #include "LudumDare55/Characters/Enemy.h"
 
@@ -26,27 +27,29 @@ void AEnemySpawnPoint::BeginPlay()
 	Super::BeginPlay();
 }
 
-bool AEnemySpawnPoint::Spawn(UClass* Monster)
+bool AEnemySpawnPoint::Spawn(TSubclassOf<AEnemy> EnemyClass)
 {
-	if (bIsBlocked || State != ESpawnerState::Ready || GetWorld() == nullptr)
+	if (bIsBlocked || State != ESpawnerState::Ready || !EnemyClass)
 	{
 		return false;
 	}
 
 	State = ESpawnerState::InSpawn;
-	const auto Location = GetActorLocation();
-	const auto Rotation = GetActorRotation();
-	const auto Actor = GetWorld()->SpawnActor(Monster, &Location, &Rotation);
+	FTransform SpawnTransform = GetActorTransform();
+	AEnemy* Enemy = GetWorld()->SpawnActorDeferred<AEnemy>(EnemyClass, SpawnTransform);
+	FVector SpawnLocation = SpawnTransform.GetLocation();
+	SpawnLocation.Z += Enemy->GetCapsuleComponent()->GetUnscaledCapsuleHalfHeight();
+	SpawnTransform.SetLocation(SpawnLocation);
+	Enemy->FinishSpawning(SpawnTransform);
 
-	if (Actor == nullptr)
+	if (!Enemy)
 	{
 		return false;
 	}
 
-	Cast<AEnemy>(Actor)->GetMesh()->SetVisibility(true);
 	State = ESpawnerState::Frozen;
 	GetWorldTimerManager().SetTimer(FreezingTimerHandle, this, &AEnemySpawnPoint::RemoveFreeze, FreezingDuration);
-	return Actor != nullptr;
+	return Enemy != nullptr;
 }
 
 void AEnemySpawnPoint::HandleCollisionBeginOverlap(UPrimitiveComponent* OverlappedComponent,

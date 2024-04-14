@@ -6,13 +6,15 @@
 #include "Components/ActorComponent.h"
 #include "MinionsCounterComponent.generated.h"
 
+class AMinion;
+
 USTRUCT(BlueprintType)
 struct FMinionCounterData
 {
 	GENERATED_BODY()
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TSubclassOf<AActor> MinionClass = nullptr;
+	TSubclassOf<AMinion> MinionClass = nullptr;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	int32 CurrentNumber = 0;
@@ -84,16 +86,16 @@ public:
 	FOnMinionsMaxNumberIncreasedDynamicSignature OnMinionsMaxNumberIncreased;
 	
 	UFUNCTION(BlueprintCallable)
-	bool IncrementCounter(TSubclassOf<AActor> MinionClass);
+	bool IncrementCounter(TSubclassOf<AMinion> MinionClass);
 	
 	UFUNCTION(BlueprintCallable)
-	bool DecrementCounter(TSubclassOf<AActor> MinionClass);
+	bool DecrementCounter(TSubclassOf<AMinion> MinionClass);
 
 	UFUNCTION(BlueprintCallable)
-	bool IncreaseMaxNumber(TSubclassOf<AActor> MinionClass, const int32 Amount);
+	bool IncreaseMaxNumber(TSubclassOf<AMinion> MinionClass, const int32 Amount);
 
 	UFUNCTION(BlueprintPure)
-	bool GetMinionCounterData(TSubclassOf<AActor> MinionClass, FMinionCounterData& OutMinionCounterData);
+	bool GetMinionCounterData(TSubclassOf<AMinion> MinionClass, FMinionCounterData& OutMinionCounterData);
 	
 private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta=(AllowPrivateAccess))

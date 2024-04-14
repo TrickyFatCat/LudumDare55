@@ -3,6 +3,8 @@
 
 #include "MinionsCounterComponent.h"
 
+#include "LudumDare55/Characters/Minion.h"
+
 
 UMinionsCounterComponent::UMinionsCounterComponent()
 {
@@ -15,7 +17,7 @@ void UMinionsCounterComponent::InitializeComponent()
 	Super::InitializeComponent();
 }
 
-bool UMinionsCounterComponent::IncrementCounter(TSubclassOf<AActor> MinionClass)
+bool UMinionsCounterComponent::IncrementCounter(TSubclassOf<AMinion> MinionClass)
 {
 	FMinionCounterData MinionCounterData;
 
@@ -33,7 +35,7 @@ bool UMinionsCounterComponent::IncrementCounter(TSubclassOf<AActor> MinionClass)
 	return true;
 }
 
-bool UMinionsCounterComponent::DecrementCounter(TSubclassOf<AActor> MinionClass)
+bool UMinionsCounterComponent::DecrementCounter(TSubclassOf<AMinion> MinionClass)
 {
 	FMinionCounterData MinionCounterData;
 
@@ -52,7 +54,7 @@ bool UMinionsCounterComponent::DecrementCounter(TSubclassOf<AActor> MinionClass)
 	return true;
 }
 
-bool UMinionsCounterComponent::IncreaseMaxNumber(TSubclassOf<AActor> MinionClass, const int32 Amount)
+bool UMinionsCounterComponent::IncreaseMaxNumber(TSubclassOf<AMinion> MinionClass, const int32 Amount)
 {
 	FMinionCounterData MinionCounterData;
 
@@ -70,7 +72,7 @@ bool UMinionsCounterComponent::IncreaseMaxNumber(TSubclassOf<AActor> MinionClass
 	return true;
 }
 
-bool UMinionsCounterComponent::GetMinionCounterData(TSubclassOf<AActor> MinionClass,
+bool UMinionsCounterComponent::GetMinionCounterData(TSubclassOf<AMinion> MinionClass,
                                                     FMinionCounterData& OutMinionCounterData)
 {
 	if (!MinionClass || MinionCounters.IsEmpty())

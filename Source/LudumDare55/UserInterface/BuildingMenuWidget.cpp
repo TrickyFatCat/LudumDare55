@@ -18,7 +18,7 @@ void UBuildingMenuWidget::NativeOnInitialized()
 		Button_Quit->SetOwningBuilding(OwningBuilding);
 	}
 
-	GenerateButtons();
+	// GenerateButtons();
 	Super::NativeOnInitialized();
 }
 
@@ -28,12 +28,13 @@ void UBuildingMenuWidget::NativePreConstruct()
 
 	if (IsDesignTime())
 	{
-		GenerateButtons();
+		// GenerateButtons();
 	}
 }
 
 void UBuildingMenuWidget::ShowButtons()
 {
+	OnButtonsShowed.Broadcast();
 	SetButtonsVisibility(true);
 }
 
@@ -84,33 +85,33 @@ void UBuildingMenuWidget::SetButtonsVisibility(const bool bIsVisible)
 
 void UBuildingMenuWidget::GenerateButtons()
 {
-	if (!HorizontalBox_Buttons)
-	{
-		return;
-	}
-
-	HorizontalBox_Buttons->ClearChildren();
-	Buttons.Empty();
-
-	if (ButtonClasses.IsEmpty())
-	{
-		return;
-	}
-
-	for (auto Button : ButtonClasses)
-	{
-		if (!Button)
-		{
-			continue;
-		}
-
-		UBuildingButtonWidget* NewButton = CreateWidget<UBuildingButtonWidget>(this, Button);
-		NewButton->SetVisibility(ESlateVisibility::Hidden);
-		HorizontalBox_Buttons->AddChildToHorizontalBox(NewButton);
-		Buttons.Add(NewButton);
-
-		USpacer* Spacer = NewObject<USpacer>(this, USpacer::StaticClass());
-		Spacer->SetSize(FVector2D{0.f, SpaceBetweenButtons});
-		HorizontalBox_Buttons->AddChildToHorizontalBox(Spacer);
-	}
+	// if (!HorizontalBox_Buttons)
+	// {
+	// 	return;
+	// }
+	//
+	// HorizontalBox_Buttons->ClearChildren();
+	// Buttons.Empty();
+	//
+	// if (ButtonClasses.IsEmpty())
+	// {
+	// 	return;
+	// }
+	//
+	// for (auto Button : ButtonClasses)
+	// {
+	// 	if (!Button)
+	// 	{
+	// 		continue;
+	// 	}
+	//
+	// 	UBuildingButtonWidget* NewButton = CreateWidget<UBuildingButtonWidget>(this, Button);
+	// 	NewButton->SetVisibility(ESlateVisibility::Hidden);
+	// 	HorizontalBox_Buttons->AddChildToHorizontalBox(NewButton);
+	// 	Buttons.Add(NewButton);
+	//
+	// 	USpacer* Spacer = NewObject<USpacer>(this, USpacer::StaticClass());
+	// 	Spacer->SetSize(FVector2D{0.f, SpaceBetweenButtons});
+	// 	HorizontalBox_Buttons->AddChildToHorizontalBox(Spacer);
+	// }
 }

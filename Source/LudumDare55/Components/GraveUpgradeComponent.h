@@ -18,6 +18,10 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnGraveUpgradedDynamicDelegate,
                                               int32, NewUpgradeCost,
                                               bool, bEnoughSouls);
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUpgradeUnlockedDynamicSignature);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUpgradeLockedDynamicSignature);
+
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class LUDUMDARE55_API UGraveUpgradeComponent : public UActorComponent
 {
@@ -47,9 +51,18 @@ protected:
 public:
 	UPROPERTY(BlueprintAssignable)
 	FOnGraveUpgradedDynamicDelegate OnGraveUpgraded;
-	
+
+	UPROPERTY(BlueprintAssignable)
+	FOnUpgradeUnlockedDynamicSignature OnUpgradeUnlocked;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnUpgradeLockedDynamicSignature OnUpgradeLocked;
+
 	UFUNCTION(BlueprintCallable)
 	bool Upgrade();
+
+	UFUNCTION(BlueprintPure)
+	bool CanUpgrade() const;
 
 private:
 	UPROPERTY()
@@ -57,4 +70,7 @@ private:
 
 	UPROPERTY()
 	TObjectPtr<USoulsCounterComponent> SoulsCounterComponent = nullptr;
+
+	UFUNCTION()
+	void HandleSoulsNumberChanged(USoulsCounterComponent* Component, int32 NewSouls, int32 DeltaSouls);
 };

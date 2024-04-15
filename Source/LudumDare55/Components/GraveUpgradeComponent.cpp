@@ -22,6 +22,8 @@ void UGraveUpgradeComponent::BeginPlay()
 	SoulsCounterComponent = Pawn->GetComponentByClass<USoulsCounterComponent>();
 	MinionsCounterComponent = Pawn->GetComponentByClass<UMinionsCounterComponent>();
 
+	SoulsCounterComponent->OnSoulsAdded.AddDynamic(this, &UGraveUpgradeComponent::HandleSoulsNumberChanged);
+	SoulsCounterComponent->OnSoulsSpent.AddDynamic(this, &UGraveUpgradeComponent::HandleSoulsNumberChanged);
 	UpgradeCost = UpgradeTable.AsInteger(InitialLevel);
 
 	if (InitialLevel > 0)
@@ -36,7 +38,7 @@ bool UGraveUpgradeComponent::Upgrade()
 		return false;
 	}
 
-	if (SoulsCounterComponent->GetSouls() < UpgradeCost)
+	if (CanUpgrade())
 	{
 		return false;
 	}
@@ -45,6 +47,25 @@ bool UGraveUpgradeComponent::Upgrade()
 	MinionsCounterComponent->IncreaseMaxNumber(MinionClass, 1);
 	Level += 1;
 	UpgradeCost = UpgradeTable.AsInteger(Level);
-	OnGraveUpgraded.Broadcast(MinionClass, Level, UpgradeCost, SoulsCounterComponent->GetSouls() < UpgradeCost);
+	OnGraveUpgraded.Broadcast(MinionClass, Level, UpgradeCost, CanUpgrade());
 	return true;
+}
+
+bool UGraveUpgradeComponent::CanUpgrade() const
+{
+	return SoulsCounterComponent->GetSouls() >= UpgradeCost;
+}
+
+void UGraveUpgradeComponent::HandleSoulsNumberChanged(USoulsCounterComponent* Component,
+                                                      int32 NewSouls,
+                                                      int32 DeltaSouls)
+{
+	if (NewSouls >= UpgradeCost)
+	{
+		OnUpgradeUnlocked.Broadcast();
+	}
+	else
+	{
+		OnUpgradeUnlocked.Broadcast();
+	}
 }

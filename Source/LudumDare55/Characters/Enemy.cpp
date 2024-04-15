@@ -3,6 +3,7 @@
 
 #include "Enemy.h"
 
+#include "LudumDare55/Components/CharacterAttackComponent.h"
 #include "LudumDare55/Components/CharacterDeathComponent.h"
 #include "LudumDare55/Components/EnemySoulComponent.h"
 #include "LudumDare55/Components/HitPointsComponent.h"
@@ -15,6 +16,7 @@ AEnemy::AEnemy()
 	HitPointsComponent = CreateDefaultSubobject<UHitPointsComponent>("HitPoints");
 	EnemySoulComponent = CreateDefaultSubobject<UEnemySoulComponent>("EnemySoul");
 	CharacterDeathComponent = CreateDefaultSubobject<UCharacterDeathComponent>("CharacterDeath");
+	CharacterAttackComponent = CreateDefaultSubobject<UCharacterAttackComponent>("CharacterAttack");
 }
 
 void AEnemy::BeginPlay()
@@ -51,4 +53,5 @@ void AEnemy::HandleZeroHealth()
 {
 	EnemySoulComponent->IncreaseSouls();
 	CharacterDeathComponent->StartDeathSequence();
+	SetActorTickEnabled(false);
 }

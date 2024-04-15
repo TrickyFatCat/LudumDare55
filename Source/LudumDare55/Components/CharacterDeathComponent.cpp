@@ -20,7 +20,7 @@ void UCharacterDeathComponent::InitializeComponent()
 	Super::InitializeComponent();
 
 	Character = Cast<ACharacter>(GetOwner());
-	
+
 	if (!Character)
 	{
 		return;
@@ -31,12 +31,16 @@ void UCharacterDeathComponent::InitializeComponent()
 
 void UCharacterDeathComponent::StartDeathSequence()
 {
-	if (!Character || !AIController || !AnimMontage)
+	if (!Character || !AnimMontage)
 	{
 		return;
 	}
 
 	Character->GetMovementComponent()->StopMovementImmediately();
 	Character->PlayAnimMontage(AnimMontage);
-	AIController->GetBrainComponent()->StopLogic("");
+
+	if (AIController)
+	{
+		AIController->GetBrainComponent()->StopLogic("");
+	}
 }

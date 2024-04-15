@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Enemy.generated.h"
 
+class UCharacterDeathComponent;
 class UEnemySoulComponent;
 class UHitPointsComponent;
 
@@ -30,6 +31,9 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<UEnemySoulComponent> EnemySoulComponent = nullptr;
 
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
+	TObjectPtr<UCharacterDeathComponent> CharacterDeathComponent = nullptr;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TArray<FName> BonesToHide;
 
@@ -39,4 +43,7 @@ protected:
 	                          const UDamageType* DamageType,
 	                          AController* InstigatedBy,
 	                          AActor* DamageCauser);
+
+	UFUNCTION()
+	void HandleZeroHealth();
 };

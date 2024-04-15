@@ -24,10 +24,11 @@ bool UMinionSpawnerComponent::SpawnMinion(TSubclassOf<AMinion> MinionClass)
 	FTransform SpawnTransform {SpawnLocation};
 	SpawnTransform.SetRotation(GetOwner()->GetActorRotation().Quaternion());
 	
-	AMinion* Minion = GetWorld()->SpawnActorDeferred<AMinion>(MinionClass, SpawnTransform);
-	SpawnLocation.Z =  Minion->GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
-	SpawnTransform.SetLocation(SpawnLocation);
-	Minion->FinishSpawning(SpawnTransform);
+	AMinion* Minion = GetWorld()->SpawnActor<AMinion>(MinionClass, SpawnTransform);
+	// AMinion* Minion = GetWorld()->SpawnActorDeferred<AMinion>(MinionClass, SpawnTransform);
+	// SpawnLocation.Z =  Minion->GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
+	// SpawnTransform.SetLocation(SpawnLocation);
+	// Minion->FinishSpawning(SpawnTransform);
 	OnMinionSpawned.Broadcast(this, Minion);
 	return true;
 }

@@ -3,6 +3,8 @@
 
 #include "Enemy.h"
 
+#include "LudumDare55/Components/CharacterAttackComponent.h"
+#include "LudumDare55/Components/CharacterDeathComponent.h"
 #include "LudumDare55/Components/EnemySoulComponent.h"
 #include "LudumDare55/Components/HitPointsComponent.h"
 
@@ -13,6 +15,8 @@ AEnemy::AEnemy()
 
 	HitPointsComponent = CreateDefaultSubobject<UHitPointsComponent>("HitPoints");
 	EnemySoulComponent = CreateDefaultSubobject<UEnemySoulComponent>("EnemySoul");
+	CharacterDeathComponent = CreateDefaultSubobject<UCharacterDeathComponent>("CharacterDeath");
+	CharacterAttackComponent = CreateDefaultSubobject<UCharacterAttackComponent>("CharacterAttack");
 }
 
 void AEnemy::BeginPlay()
@@ -28,7 +32,7 @@ void AEnemy::BeginPlay()
 	}
 
 	OnTakeAnyDamage.AddUniqueDynamic(this, &AEnemy::HandleAnyDamageTaken);
-	HitPointsComponent->OnValueZero.AddUniqueDynamic(EnemySoulComponent, &UEnemySoulComponent::IncreaseSouls);
+	HitPointsComponent->OnValueZero.AddUniqueDynamic(this, &AEnemy::HandleZeroHealth);
 }
 
 void AEnemy::Tick(float DeltaTime)
@@ -43,4 +47,11 @@ void AEnemy::HandleAnyDamageTaken(AActor* DamagedActor,
                                   AActor* DamageCauser)
 {
 	HitPointsComponent->DecreaseValue(Damage);
+}
+
+void AEnemy::HandleZeroHealth()
+{
+	EnemySoulComponent->IncreaseSouls();
+	CharacterDeathComponent->StartDeathSequence();
+	SetActorTickEnabled(false);
 }

@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Minion.generated.h"
 
+class UCharacterSpawnComponent;
 class UCharacterAttackComponent;
 class UCharacterDeathComponent;
 class UMinionsCounterComponent;
@@ -38,6 +39,9 @@ protected:
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<UCharacterAttackComponent> CharacterAttackComponent = nullptr;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
+	TObjectPtr<UCharacterSpawnComponent> CharacterSpawnComponent = nullptr;
 
 	UPROPERTY()
 	TObjectPtr<UMinionsCounterComponent> CounterComponent = nullptr;

@@ -34,12 +34,12 @@ void UGraveUpgradeComponent::BeginPlay()
 
 bool UGraveUpgradeComponent::Upgrade()
 {
-	if (!SoulsCounterComponent || MinionsCounterComponent)
+	if (!SoulsCounterComponent || !MinionsCounterComponent)
 	{
 		return false;
 	}
 
-	if (CanUpgrade())
+	if (!CanUpgrade())
 	{
 		return false;
 	}

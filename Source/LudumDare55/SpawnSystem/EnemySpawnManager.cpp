@@ -73,7 +73,11 @@ void AEnemySpawnManager::StartWave()
 		return;
 	}
 	
-	GenerateWaveData();
+	if (!GenerateWaveData())
+	{
+		return;
+	}
+	
 	GetWorldTimerManager().SetTimer(SpawnDelayTimer, this, &AEnemySpawnManager::SpawnEnemy, CurrentWaveData.SpawnDelay,
 	                                true);
 	OnWaveStarted.Broadcast(WaveIndex);

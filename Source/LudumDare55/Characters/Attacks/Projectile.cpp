@@ -33,7 +33,7 @@ void AProjectile::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void AProjectile::SetProjectileData(const FVector& Direction, const int32 Damage)
+void AProjectile::SetProjectileData(const FVector& Direction, const int32 NewDamage)
 {
 	MovementDirection = Direction;
 	this->Damage = Damage <= 0 ? 1 : Damage;

@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "Projectile.generated.h"
 
+class USphereComponent;
+class UProjectileMovementComponent;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnHitSignature);
 
 UCLASS()
@@ -33,7 +35,7 @@ protected:
 	FOnHitSignature OnHit;
 
 public:
-	auto SetProjectileData(const FVector& Direction, const int32 Damage) -> void;
+	auto SetProjectileData(const FVector& Direction, const int32 NewDamage) -> void;
 
 private:
 	FVector MovementDirection = FVector::ForwardVector;

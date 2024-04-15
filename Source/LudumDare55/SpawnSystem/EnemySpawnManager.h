@@ -114,4 +114,7 @@ private:
 
 	UPROPERTY()
 	FTimerHandle WaveRestartDelayTimer;
+
+	UFUNCTION()
+	void HandleGameStateChanged(EGameModeState NewState);
 };

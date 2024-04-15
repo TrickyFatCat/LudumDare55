@@ -23,6 +23,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UAnimMontage* AnimMontage = nullptr;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	float Range = 200.0f;
 
 public:
 	UPROPERTY(BlueprintAssignable)

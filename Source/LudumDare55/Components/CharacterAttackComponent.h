@@ -42,6 +42,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	float AttackAngle = 0;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FVector AttackOffset = FVector::Zero();
+
 public:
 	UPROPERTY(BlueprintAssignable)
 	FOnAttackStartedDynamicSignature OnAttackStarted;

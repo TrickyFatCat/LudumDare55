@@ -51,7 +51,7 @@ void UCharacterAttackComponent::InitiateAttack()
 	{
 		FVector Direction = GetOwner()->GetActorForwardVector();
 		Direction = Direction.RotateAngleAxisRad(Theta * i - Phi, FVector::UpVector);
-		const FTransform SpawnTransform(FRotator::ZeroRotator, StartPoint + Direction);
+		const FTransform SpawnTransform(FRotator::ZeroRotator, StartPoint + Direction + AttackOffset);
 		AProjectile* Projectile = GetWorld()->SpawnActorDeferred<AProjectile>(ProjectileClass, SpawnTransform);
 
 		if (Projectile)

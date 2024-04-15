@@ -43,4 +43,7 @@ protected:
 
 	UFUNCTION()
 	void HandleZeroHealth();
+
+	UFUNCTION()
+	void HandleLifeExpired();
 };

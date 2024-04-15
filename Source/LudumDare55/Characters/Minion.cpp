@@ -27,8 +27,8 @@ void AMinion::BeginPlay()
 	Super::BeginPlay();
 
 	CounterComponent = UGameplayStatics::GetPlayerPawn(this, 0)->GetComponentByClass<UMinionsCounterComponent>();
-	LifeTimeComponent->OnLifeExpired.AddUniqueDynamic(this, &AMinion::DecrementCounter);
-	HitPointsComponent->OnValueZero.AddUniqueDynamic(this, &AMinion::HandleZeroHealth);
+	LifeTimeComponent->OnLifeExpired.AddUniqueDynamic(this, &AMinion::HandleLifeExpired);
+	HitPointsComponent->OnValueZero.AddDynamic(this, &AMinion::HandleZeroHealth);
 }
 
 void AMinion::Tick(float DeltaTime)
@@ -49,5 +49,11 @@ void AMinion::DecrementCounter()
 void AMinion::HandleZeroHealth()
 {
 	LifeTimeComponent->StopTimer();
+	CharacterDeathComponent->StartDeathSequence();
+}
+
+void AMinion::HandleLifeExpired()
+{
+	DecrementCounter();
 	CharacterDeathComponent->StartDeathSequence();
 }

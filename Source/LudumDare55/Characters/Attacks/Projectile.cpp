@@ -16,6 +16,7 @@ AProjectile::AProjectile()
 	SetRootComponent(SphereComponent);
 
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>("ProjectileMovement");
+	ProjectileMovementComponent->ProjectileGravityScale = 0.f;
 }
 
 void AProjectile::BeginPlay()

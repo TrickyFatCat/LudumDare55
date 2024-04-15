@@ -12,6 +12,8 @@ class UBuildingButtonWidget;
 class ABuilding;
 class UHorizontalBox;
 class UButtonWidget;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnButtonsShowedDynamicSignature);
 /**
  * 
  */
@@ -26,6 +28,9 @@ protected:
 	virtual void NativePreConstruct() override;
 
 public:
+	UPROPERTY(BlueprintAssignable)
+	FOnButtonsShowedDynamicSignature OnButtonsShowed;
+	
 	UFUNCTION(BlueprintCallable)
 	void ShowButtons();
 
@@ -33,8 +38,8 @@ public:
 	void SetOwningBuilding(ABuilding* Building);
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(BindWidget))
-	TObjectPtr<UHorizontalBox> HorizontalBox_Buttons = nullptr;
+	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(BindWidget))
+	// TObjectPtr<UHorizontalBox> HorizontalBox_Buttons = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(BindWidget))
 	TObjectPtr<UBuildingButtonWidget> Button_Quit = nullptr;

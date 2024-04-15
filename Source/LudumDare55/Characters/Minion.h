@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Minion.generated.h"
 
+class UCharacterDeathComponent;
 class UMinionsCounterComponent;
 class UMinionLifeTimeComponent;
 class UHitPointsComponent;
@@ -31,9 +32,18 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<UMinionLifeTimeComponent> LifeTimeComponent = nullptr;
 
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
+	TObjectPtr<UCharacterDeathComponent> CharacterDeathComponent = nullptr;
+
 	UPROPERTY()
 	TObjectPtr<UMinionsCounterComponent> CounterComponent = nullptr;
 
 	UFUNCTION(BlueprintCallable)
 	void DecrementCounter();
+
+	UFUNCTION()
+	void HandleZeroHealth();
+
+	UFUNCTION()
+	void HandleLifeExpired();
 };

@@ -3,10 +3,14 @@
 
 #include "Minion.h"
 
+#include "BrainComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "LudumDare55/Components/CharacterDeathComponent.h"
 #include "LudumDare55/Components/HitPointsComponent.h"
 #include "LudumDare55/Components/MinionLifeTimeComponent.h"
 #include "LudumDare55/Components/MinionsCounterComponent.h"
+#include "Runtime/AIModule/Classes/AIController.h"
 
 
 AMinion::AMinion()
@@ -15,6 +19,7 @@ AMinion::AMinion()
 
 	HitPointsComponent = CreateDefaultSubobject<UHitPointsComponent>("HitPoints");
 	LifeTimeComponent = CreateDefaultSubobject<UMinionLifeTimeComponent>("LifeTime");
+	CharacterDeathComponent = CreateDefaultSubobject<UCharacterDeathComponent>("CharacterDeath");
 }
 
 void AMinion::BeginPlay()
@@ -22,8 +27,8 @@ void AMinion::BeginPlay()
 	Super::BeginPlay();
 
 	CounterComponent = UGameplayStatics::GetPlayerPawn(this, 0)->GetComponentByClass<UMinionsCounterComponent>();
-	LifeTimeComponent->OnLifeExpired.AddUniqueDynamic(this, &AMinion::DecrementCounter);
-	HitPointsComponent->OnValueZero.AddUniqueDynamic(LifeTimeComponent, &UMinionLifeTimeComponent::StopTimer);
+	LifeTimeComponent->OnLifeExpired.AddUniqueDynamic(this, &AMinion::HandleLifeExpired);
+	HitPointsComponent->OnValueZero.AddDynamic(this, &AMinion::HandleZeroHealth);
 }
 
 void AMinion::Tick(float DeltaTime)
@@ -37,6 +42,18 @@ void AMinion::DecrementCounter()
 	{
 		return;
 	}
-	
+
 	CounterComponent->DecrementCounter(GetClass());
+}
+
+void AMinion::HandleZeroHealth()
+{
+	LifeTimeComponent->StopTimer();
+	CharacterDeathComponent->StartDeathSequence();
+}
+
+void AMinion::HandleLifeExpired()
+{
+	DecrementCounter();
+	CharacterDeathComponent->StartDeathSequence();
 }

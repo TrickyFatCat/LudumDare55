@@ -19,7 +19,7 @@ void UCharacterDeathComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
 
-	ACharacter* Character = Cast<ACharacter>(GetOwner());
+	Character = Cast<ACharacter>(GetOwner());
 	
 	if (!Character)
 	{

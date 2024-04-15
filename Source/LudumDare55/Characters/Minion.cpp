@@ -8,6 +8,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "LudumDare55/Components/CharacterAttackComponent.h"
 #include "LudumDare55/Components/CharacterDeathComponent.h"
+#include "LudumDare55/Components/CharacterSpawnComponent.h"
 #include "LudumDare55/Components/HitPointsComponent.h"
 #include "LudumDare55/Components/MinionLifeTimeComponent.h"
 #include "LudumDare55/Components/MinionsCounterComponent.h"
@@ -22,6 +23,7 @@ AMinion::AMinion()
 	LifeTimeComponent = CreateDefaultSubobject<UMinionLifeTimeComponent>("LifeTime");
 	CharacterDeathComponent = CreateDefaultSubobject<UCharacterDeathComponent>("CharacterDeath");
 	CharacterAttackComponent = CreateDefaultSubobject<UCharacterAttackComponent>("CharacterAttack");
+	CharacterSpawnComponent = CreateDefaultSubobject<UCharacterSpawnComponent>("CharacterSpawn");
 }
 
 void AMinion::BeginPlay()
@@ -31,6 +33,7 @@ void AMinion::BeginPlay()
 	CounterComponent = UGameplayStatics::GetPlayerPawn(this, 0)->GetComponentByClass<UMinionsCounterComponent>();
 	LifeTimeComponent->OnLifeExpired.AddUniqueDynamic(this, &AMinion::HandleLifeExpired);
 	HitPointsComponent->OnValueZero.AddDynamic(this, &AMinion::HandleZeroHealth);
+	CharacterSpawnComponent->StartSpawn();
 }
 
 void AMinion::Tick(float DeltaTime)

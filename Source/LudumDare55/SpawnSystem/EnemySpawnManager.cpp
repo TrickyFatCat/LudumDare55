@@ -4,6 +4,8 @@
 #include "EnemySpawnManager.h"
 
 #include "EnemySpawnPoint.h"
+#include "TrickyGameModeBase.h"
+#include "TrickyGameModeLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "LudumDare55/Characters/Enemy.h"
 
@@ -24,6 +26,13 @@ void AEnemySpawnManager::BeginPlay()
 	for (const auto Actor : OutActors)
 	{
 		EnemySpawnPoints.Add(Cast<AEnemySpawnPoint>(Actor));
+	}
+
+	ATrickyGameModeBase* TrickyGameMode = UTrickyGameModeLibrary::GetTrickyGameMode(this);
+
+	if (TrickyGameMode)
+	{
+		TrickyGameMode->OnStateChanged.AddDynamic(this, &AEnemySpawnManager::HandleGameStateChanged);
 	}
 }
 
@@ -145,4 +154,13 @@ bool AEnemySpawnManager::GenerateWaveData()
 	CurrentWaveData.SpawnDelay = SpawnDelay.GetValueAtLevel(WaveIndex);
 	CurrentWaveData.MaxSpawnAtOnce = MaxSpawnAtOnce.AsInteger(WaveIndex);
 	return true;
+}
+
+void AEnemySpawnManager::HandleGameStateChanged(EGameModeState NewState)
+{
+	if (NewState == EGameModeState::Lose)
+	{
+		GetWorldTimerManager().ClearTimer(WaveRestartDelayTimer);
+		GetWorldTimerManager().ClearTimer(SpawnDelayTimer);
+	}
 }

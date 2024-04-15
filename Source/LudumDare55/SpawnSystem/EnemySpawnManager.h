@@ -102,7 +102,7 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void FinishWave();
 
-	void GenerateWaveData();
+	bool GenerateWaveData();
 
 private:
 	TArray<AEnemySpawnPoint*> EnemySpawnPoints;

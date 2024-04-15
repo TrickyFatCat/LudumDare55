@@ -102,12 +102,19 @@ void AEnemySpawnManager::FinishWave()
 	GetWorldTimerManager().SetTimer(WaveRestartDelayTimer, this, &AEnemySpawnManager::StartWave, DelayTimer, false);
 }
 
-void AEnemySpawnManager::GenerateWaveData()
+bool AEnemySpawnManager::GenerateWaveData()
 {
 	TArray<TSubclassOf<AEnemy>> EnemyClasses;
 
 	TArray<FEnemyWaveData*> AllEnemies;
-	WaveTables[WaveIndex]->GetAllRows<FEnemyWaveData>("", AllEnemies);
+
+	UDataTable* DataTable = WaveTables[WaveIndex];
+
+	if (!DataTable)
+	{
+		return false;
+	}
+	DataTable->GetAllRows<FEnemyWaveData>("", AllEnemies);
 
 	for (const FEnemyWaveData* EnemyStat : AllEnemies)
 	{
@@ -133,4 +140,5 @@ void AEnemySpawnManager::GenerateWaveData()
 	CurrentWaveData.Spawned = 0;
 	CurrentWaveData.SpawnDelay = SpawnDelay.GetValueAtLevel(WaveIndex);
 	CurrentWaveData.MaxSpawnAtOnce = MaxSpawnAtOnce.AsInteger(WaveIndex);
+	return true;
 }

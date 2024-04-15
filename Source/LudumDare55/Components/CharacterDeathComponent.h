@@ -10,6 +10,10 @@
 class AAIController;
 class UCharacterMovementComponent;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeathSequenceStartedDynamicSignature);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeathSequenceFinishedDynamicSignature);
+
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class LUDUMDARE55_API UCharacterDeathComponent : public UActorComponent
 {
@@ -25,13 +29,22 @@ protected:
 	UAnimMontage* AnimMontage = nullptr;
 
 public:
+	UPROPERTY(BlueprintAssignable)
+	FOnDeathSequenceStartedDynamicSignature OnDeathSequenceStarted;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnDeathSequenceFinishedDynamicSignature OnDeathSequenceFinished;
+	
 	UFUNCTION(BlueprintCallable)
 	void StartDeathSequence();
-	
+
 private:
 	UPROPERTY()
 	ACharacter* Character = nullptr;
 
 	UPROPERTY()
 	TObjectPtr<AAIController> AIController = nullptr;
+
+	UFUNCTION()
+	void HandleControllerChanged(APawn* Pawn, AController* OldController, AController* NewController);
 };

@@ -6,6 +6,7 @@
 #include "BrainComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "LudumDare55/Components/CharacterAttackComponent.h"
 #include "LudumDare55/Components/CharacterDeathComponent.h"
 #include "LudumDare55/Components/HitPointsComponent.h"
 #include "LudumDare55/Components/MinionLifeTimeComponent.h"
@@ -20,6 +21,7 @@ AMinion::AMinion()
 	HitPointsComponent = CreateDefaultSubobject<UHitPointsComponent>("HitPoints");
 	LifeTimeComponent = CreateDefaultSubobject<UMinionLifeTimeComponent>("LifeTime");
 	CharacterDeathComponent = CreateDefaultSubobject<UCharacterDeathComponent>("CharacterDeath");
+	CharacterAttackComponent = CreateDefaultSubobject<UCharacterAttackComponent>("CharacterAttack");
 }
 
 void AMinion::BeginPlay()
@@ -49,11 +51,11 @@ void AMinion::DecrementCounter()
 void AMinion::HandleZeroHealth()
 {
 	LifeTimeComponent->StopTimer();
-	CharacterDeathComponent->StartDeathSequence();
 }
 
 void AMinion::HandleLifeExpired()
 {
 	DecrementCounter();
 	CharacterDeathComponent->StartDeathSequence();
+	SetActorTickEnabled(false);
 }

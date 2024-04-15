@@ -26,7 +26,7 @@ void UCharacterDeathComponent::InitializeComponent()
 		return;
 	}
 
-	AIController = Cast<AAIController>(Character->GetController());
+	Character->ReceiveControllerChangedDelegate.AddDynamic(this, &UCharacterDeathComponent::HandleControllerChanged);
 }
 
 void UCharacterDeathComponent::StartDeathSequence()
@@ -38,9 +38,13 @@ void UCharacterDeathComponent::StartDeathSequence()
 
 	Character->GetMovementComponent()->StopMovementImmediately();
 	Character->PlayAnimMontage(AnimMontage);
+	AIController->SetActorTickEnabled(false);
+	OnDeathSequenceFinished.Broadcast();
+}
 
-	if (AIController)
-	{
-		AIController->GetBrainComponent()->StopLogic("");
-	}
+void UCharacterDeathComponent::HandleControllerChanged(APawn* Pawn,
+                                                       AController* OldController,
+                                                       AController* NewController)
+{
+	AIController = Cast<AAIController>(Character->GetController());
 }

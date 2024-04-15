@@ -24,6 +24,7 @@ void UGraveUpgradeComponent::BeginPlay()
 
 	SoulsCounterComponent->OnSoulsAdded.AddDynamic(this, &UGraveUpgradeComponent::HandleSoulsNumberChanged);
 	SoulsCounterComponent->OnSoulsSpent.AddDynamic(this, &UGraveUpgradeComponent::HandleSoulsNumberChanged);
+	Level = InitialLevel;
 	UpgradeCost = UpgradeTable.AsInteger(InitialLevel);
 
 	if (InitialLevel > 0)

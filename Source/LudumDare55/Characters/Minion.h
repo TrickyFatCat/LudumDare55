@@ -26,6 +26,9 @@ protected:
 
 public:
 	virtual void Tick(float DeltaTime) override;
+	
+	UFUNCTION(BlueprintCallable)
+	bool IsDead();
 
 protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)

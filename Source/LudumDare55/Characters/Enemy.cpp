@@ -40,6 +40,11 @@ void AEnemy::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+bool AEnemy::IsDead()
+{
+	return HitPointsComponent->GetValue() == 0;
+}
+
 void AEnemy::HandleAnyDamageTaken(AActor* DamagedActor,
                                   float Damage,
                                   const UDamageType* DamageType,

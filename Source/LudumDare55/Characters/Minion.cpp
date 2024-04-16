@@ -41,6 +41,12 @@ void AMinion::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+bool AMinion::IsDead()
+{
+	return HitPointsComponent->GetValue() == 0;
+}
+
+
 void AMinion::DecrementCounter()
 {
 	if (!CounterComponent)
@@ -58,6 +64,7 @@ void AMinion::HandleZeroHealth()
 
 void AMinion::HandleLifeExpired()
 {
+	HitPointsComponent->DecreaseValue(1000000);
 	DecrementCounter();
 	CharacterDeathComponent->StartDeathSequence();
 	SetActorTickEnabled(false);

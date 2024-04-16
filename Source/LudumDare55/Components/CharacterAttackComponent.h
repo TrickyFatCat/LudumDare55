@@ -24,6 +24,7 @@ public:
 protected:
 	virtual void InitializeComponent() override;
 
+public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UAnimMontage* AnimMontage = nullptr;
 	

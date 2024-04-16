@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Enemy.generated.h"
 
+class UEnemyDataHandlerComponent;
 class UCharacterAttackComponent;
 class UCharacterDeathComponent;
 class UEnemySoulComponent;
@@ -28,6 +29,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool IsDead();
 
+	UHitPointsComponent* GetHitPointsComponent() const { return HitPointsComponent; }
+
+	UCharacterAttackComponent* GetAttackComponent() const { return CharacterAttackComponent; }
+
 protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<UHitPointsComponent> HitPointsComponent = nullptr;
@@ -40,6 +45,9 @@ protected:
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<UCharacterAttackComponent> CharacterAttackComponent = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<UEnemyDataHandlerComponent> EnemyDataHandlerComponent = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TArray<FName> BonesToHide;

@@ -93,6 +93,8 @@ public:
 	 */
 	UFUNCTION(BlueprintPure, Category="TrickyEntityResources|SimpleResourceComponent")
 	float GetNormalisedValue() const;
+
+	void SetMaxValue(int32 NewValue);
 	
 private:
 	UPROPERTY()

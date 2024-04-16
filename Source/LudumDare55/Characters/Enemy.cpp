@@ -5,6 +5,7 @@
 
 #include "LudumDare55/Components/CharacterAttackComponent.h"
 #include "LudumDare55/Components/CharacterDeathComponent.h"
+#include "LudumDare55/Components/EnemyDataHandlerComponent.h"
 #include "LudumDare55/Components/EnemySoulComponent.h"
 #include "LudumDare55/Components/HitPointsComponent.h"
 
@@ -17,6 +18,7 @@ AEnemy::AEnemy()
 	EnemySoulComponent = CreateDefaultSubobject<UEnemySoulComponent>("EnemySoul");
 	CharacterDeathComponent = CreateDefaultSubobject<UCharacterDeathComponent>("CharacterDeath");
 	CharacterAttackComponent = CreateDefaultSubobject<UCharacterAttackComponent>("CharacterAttack");
+	EnemyDataHandlerComponent = CreateDefaultSubobject<UEnemyDataHandlerComponent>("DataHandler");
 }
 
 void AEnemy::BeginPlay()

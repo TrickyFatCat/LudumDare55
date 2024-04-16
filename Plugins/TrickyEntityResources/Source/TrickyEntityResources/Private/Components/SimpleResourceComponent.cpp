@@ -103,6 +103,18 @@ float USimpleResourceComponent::GetNormalisedValue() const
 	return ResourceObject->GetNormalisedValue();
 }
 
+void USimpleResourceComponent::SetMaxValue(int32 NewValue)
+{
+	if (!ResourceObject)
+	{
+		return;
+	}
+
+	ResourceData.MaxValue = NewValue;
+	ResourceObject->SetResourceData(ResourceData);
+	ResourceObject->GetResourceData(ResourceData);
+}
+
 void USimpleResourceComponent::HandleValueDecrease(const int32 NewValue, const int32 Amount)
 {
 	ResourceData.Value = NewValue;

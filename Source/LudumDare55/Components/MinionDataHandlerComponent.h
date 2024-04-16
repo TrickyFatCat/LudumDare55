@@ -4,19 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "EnemyDataHandlerComponent.generated.h"
+#include "MinionDataHandlerComponent.generated.h"
 
-
-class AEnemy;
 class AProjectile;
+class AMinion;
 
 USTRUCT(BlueprintType)
-struct FEnemyData : public FTableRowBase
+struct FMinionData : public FTableRowBase
 {
 	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TSubclassOf<AEnemy> EnemyClass = nullptr;
+	TSubclassOf<AMinion> MinionClass = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ClampMin = "1", UIMin = "1"))
 	int32 HitPoints = 5;
@@ -44,17 +43,17 @@ struct FEnemyData : public FTableRowBase
 };
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
-class LUDUMDARE55_API UEnemyDataHandlerComponent : public UActorComponent
+class LUDUMDARE55_API UMinionDataHandlerComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:
-	UEnemyDataHandlerComponent();
+	UMinionDataHandlerComponent();
 
 protected:
 	virtual void InitializeComponent() override;
-
+	
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	UDataTable* EnemyDataTable = nullptr;
+	UDataTable* MinionDataTable = nullptr;
 };

@@ -10,6 +10,7 @@
 #include "LudumDare55/Components/CharacterDeathComponent.h"
 #include "LudumDare55/Components/CharacterSpawnComponent.h"
 #include "LudumDare55/Components/HitPointsComponent.h"
+#include "LudumDare55/Components/MinionDataHandlerComponent.h"
 #include "LudumDare55/Components/MinionLifeTimeComponent.h"
 #include "LudumDare55/Components/MinionsCounterComponent.h"
 #include "Runtime/AIModule/Classes/AIController.h"
@@ -24,6 +25,7 @@ AMinion::AMinion()
 	CharacterDeathComponent = CreateDefaultSubobject<UCharacterDeathComponent>("CharacterDeath");
 	CharacterAttackComponent = CreateDefaultSubobject<UCharacterAttackComponent>("CharacterAttack");
 	CharacterSpawnComponent = CreateDefaultSubobject<UCharacterSpawnComponent>("CharacterSpawn");
+	MinionDataHandler = CreateDefaultSubobject<UMinionDataHandlerComponent>("DataHandler");
 }
 
 void AMinion::BeginPlay()

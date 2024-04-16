@@ -3,9 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Enemy.h"
 #include "GameFramework/Character.h"
 #include "Minion.generated.h"
 
+class UMinionDataHandlerComponent;
 class UCharacterSpawnComponent;
 class UCharacterAttackComponent;
 class UCharacterDeathComponent;
@@ -29,6 +31,10 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 	bool IsDead();
+	
+	UHitPointsComponent* GetHitPointsComponent() const { return HitPointsComponent; };
+
+	UCharacterAttackComponent* GetAttackComponent() const { return CharacterAttackComponent; };
 
 protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
@@ -45,6 +51,9 @@ protected:
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
 	TObjectPtr<UCharacterSpawnComponent> CharacterSpawnComponent = nullptr;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly)
+	TObjectPtr<UMinionDataHandlerComponent> MinionDataHandler = nullptr;
 
 	UPROPERTY()
 	TObjectPtr<UMinionsCounterComponent> CounterComponent = nullptr;

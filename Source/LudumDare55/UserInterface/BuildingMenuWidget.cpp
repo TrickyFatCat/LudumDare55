@@ -59,7 +59,7 @@ void UBuildingMenuWidget::SetOwningBuilding(ABuilding* Building)
 void UBuildingMenuWidget::HandleButtonClicked(UButtonWidget* ButtonWidget)
 {
 	SetButtonsVisibility(false);
-	UTrickyGameModeLibrary::SetMouseEventsEnabled(this, true);
+	// UTrickyGameModeLibrary::SetMouseEventsEnabled(this, true);
 }
 
 void UBuildingMenuWidget::SetButtonsVisibility(const bool bIsVisible)

@@ -38,7 +38,7 @@ void ABuilding::BeginPlay()
 void ABuilding::HandleMouseClick(AActor* TouchedActor, FKey ButtonPressed)
 {
 	bIsSelected = true;
-	UTrickyGameModeLibrary::SetMouseEventsEnabled(this, false);
+	// UTrickyGameModeLibrary::SetMouseEventsEnabled(this, false);
 
 	if (BuildingMenuWidget)
 	{

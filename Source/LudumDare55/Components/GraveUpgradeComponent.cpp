@@ -67,6 +67,6 @@ void UGraveUpgradeComponent::HandleSoulsNumberChanged(USoulsCounterComponent* Co
 	}
 	else
 	{
-		OnUpgradeUnlocked.Broadcast();
+		OnUpgradeLocked.Broadcast();
 	}
 }

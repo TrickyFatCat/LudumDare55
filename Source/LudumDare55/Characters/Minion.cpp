@@ -34,7 +34,7 @@ void AMinion::BeginPlay()
 
 	CounterComponent = UGameplayStatics::GetPlayerPawn(this, 0)->GetComponentByClass<UMinionsCounterComponent>();
 	LifeTimeComponent->OnLifeExpired.AddUniqueDynamic(this, &AMinion::HandleLifeExpired);
-	HitPointsComponent->OnValueZero.AddDynamic(this, &AMinion::HandleZeroHealth);
+	// HitPointsComponent->OnValueZero.AddDynamic(this, &AMinion::HandleZeroHealth);
 	CharacterSpawnComponent->StartSpawn();
 }
 

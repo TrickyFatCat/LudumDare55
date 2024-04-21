@@ -33,7 +33,7 @@ void AEnemy::BeginPlay()
 		}
 	}
 
-	OnTakeAnyDamage.AddUniqueDynamic(this, &AEnemy::HandleAnyDamageTaken);
+	// OnTakeAnyDamage.AddUniqueDynamic(this, &AEnemy::HandleAnyDamageTaken);
 	HitPointsComponent->OnValueZero.AddUniqueDynamic(this, &AEnemy::HandleZeroHealth);
 }
 

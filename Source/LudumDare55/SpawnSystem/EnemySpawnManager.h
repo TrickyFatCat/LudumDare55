@@ -107,12 +107,13 @@ protected:
 private:
 	TArray<AEnemySpawnPoint*> EnemySpawnPoints;
 
+	UPROPERTY(BlueprintReadOnly, meta=(AllowPrivateAccess))
 	FWaveData CurrentWaveData;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, meta=(AllowPrivateAccess))
 	FTimerHandle SpawnDelayTimer;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, meta=(AllowPrivateAccess))
 	FTimerHandle WaveRestartDelayTimer;
 
 	UFUNCTION()

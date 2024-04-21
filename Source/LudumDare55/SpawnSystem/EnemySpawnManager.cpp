@@ -12,7 +12,11 @@
 
 AEnemySpawnManager::AEnemySpawnManager()
 {
+#if WITH_EDITORONLY_DATA
+	PrimaryActorTick.bCanEverTick = true;
+#else
 	PrimaryActorTick.bCanEverTick = false;
+#endif
 }
 
 void AEnemySpawnManager::BeginPlay()

@@ -36,6 +36,7 @@ void UCharacterDeathComponent::StartDeathSequence()
 		return;
 	}
 
+	Character->StopAnimMontage();
 	Character->GetMovementComponent()->StopMovementImmediately();
 	Character->PlayAnimMontage(AnimMontage);
 	AIController->SetActorTickEnabled(false);
